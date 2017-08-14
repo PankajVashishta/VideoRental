@@ -14,7 +14,38 @@ namespace VideoRental.Controllers
         public ActionResult Random()
         {
             var movie = new Movie() {Name = "Titanic"};
-            return View(movie);
+            //return View(movie);
+
+            //return HttpNotFound();
+            //return new EmptyResult();
+            return RedirectToAction("Index", "Home", new{test = "Test"});
+        }
+
+        public ActionResult Edit(int MovieId)
+        {
+            return Content("MovieId : " + MovieId);
+        }
+
+        public ActionResult Show(int? pageNumber, string sortBy)
+        {
+            if (!pageNumber.HasValue)
+                pageNumber = 1;
+
+            if (string.IsNullOrWhiteSpace(sortBy))
+                sortBy = "Name";
+
+            return Content($"pageNumber : {pageNumber} & SortBy : {sortBy}");
+        }
+
+        public ActionResult ReleasedByDate(int year, int month)
+        {
+            return Content($"Convetion based routing : {year}/{month}");
+        }
+
+        [Route("movies/releasedByYear/{year:regex(\\d{4})}/{month:regex(\\d{2})}")]
+        public ActionResult ReleasedByDateA(int year, int month)
+        {
+            return Content($"Attribute base routiung : {year}/{month}");
         }
     }
 }
