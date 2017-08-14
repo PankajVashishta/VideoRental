@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using VideoRental.Models;
+using VideoRental.ViewModels;
 
 namespace VideoRental.Controllers
 {
@@ -13,12 +14,23 @@ namespace VideoRental.Controllers
         // GET: Movies
         public ActionResult Random()
         {
-            var movie = new Movie() {Name = "Titanic"};
-            //return View(movie);
+            var movie = new Movie() {Name = "Titanic 2"};
+
+            var viewModel = new RandomViewModel
+            {
+                Movie = movie,
+                Customers = new List<Customer>
+                {
+                    new Customer{CustomerId = 1, Name = "Pankaj"},
+                    new Customer{CustomerId = 2, Name = "Vashishta"},
+                }
+            };
+
+            return View(viewModel);
 
             //return HttpNotFound();
             //return new EmptyResult();
-            return RedirectToAction("Index", "Home", new{test = "Test"});
+            //return RedirectToAction("Index", "Home", new{test = "Test"});
         }
 
         public ActionResult Edit(int MovieId)
